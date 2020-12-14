@@ -1,6 +1,6 @@
 from django.urls import path
 
-from memberships.views import MembershipSelectView,PaymentView,UpdateTransactionRecords,CancelSubscription
+from memberships.views import MembershipSelectView, PaymentView, UpdateTransactionRecords, CancelSubscription
 
 app_name = 'memberships'
 

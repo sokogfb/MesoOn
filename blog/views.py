@@ -1,11 +1,9 @@
-from django.shortcuts import render,get_object_or_404,redirect
-from blog.models import Post
-from django.utils import timezone
-from blog.forms import PostForm
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.views.generic import (TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView )
 from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.views.generic import (ListView, DetailView)
+
+from blog.models import Post
+
 
 # Create your views here.
 
@@ -17,7 +15,6 @@ class PostListView(ListView):
     model = Post
 
 
-
 class PostDetailView(DetailView):
     context_object_name = 'post'
     template_name = 'blog/post_detail.html'
@@ -26,14 +23,15 @@ class PostDetailView(DetailView):
 
 def create_post(request):
     if request.method == 'POST':
-        titulli = request.POST.get('title')
-        permbajtja = request.POST.get('text')
-        postim = Post(title=titulli, text=permbajtja, author=request.user)
-        postim.save()
+        title = request.POST.get('title')
+        content = request.POST.get('text')
+        post = Post(title=title, text=content, author=request.user)
+        post.save()
         messages.success(request, f'Postimi u krijua me sukses.')
         return redirect('blogs:post_list')
     return render(request, 'blog/create_post.html')
 
+
 def delete_post(request, id):
-    Post(id = id).delete()
+    Post(id=id).delete()
     return redirect('blogs:post_list')

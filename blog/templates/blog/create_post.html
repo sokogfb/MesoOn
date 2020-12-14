@@ -5,16 +5,16 @@
 {% block content %}
 <div class="container">
     <div class="text-center">
-        <h1>Krijo nje postim</h1>
+        <h1>Create a post</h1>
     </div>
     <form method="post">
         {% csrf_token %}
-        <label for="">Titulli*</label>
-        <input type="text" class="form-control" name="title" placeholder="Titulli i postimit...">
-        <label for="">Postimi*</label>
-        <textarea class="form-control" name="text" id="" cols="30" rows="10" placeholder="Permbajtja e postimit..."></textarea>
+        <label for="">Title*</label>
+        <input type="text" class="form-control" name="title" placeholder="Post title...">
+        <label for="">Post*</label>
+        <textarea class="form-control" name="text" id="" cols="30" rows="10" placeholder="Post content..."></textarea>
         <br>
-        <button class="site-btn">Krijo postimin</button>
+        <button class="site-btn">Create The Post</button>
     </form>
 
 </div>

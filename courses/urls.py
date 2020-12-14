@@ -1,7 +1,8 @@
-from django.urls import path
 from django.contrib.auth.decorators import login_required
+from django.urls import path
 
-from courses.views import HomeView,AboutView,ContactView,CourseListView, CourseDetailView,LessonDetailView, SearchView, krijo_klase, krijo_lende, krijo_mesim
+from courses.views import HomeView, AboutView, ContactView, CourseListView, CourseDetailView, LessonDetailView, \
+    SearchView, krijo_klase, krijo_lende, krijo_mesim
 
 app_name = 'courses'
 

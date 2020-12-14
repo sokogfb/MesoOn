@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
       <div class="col-lg-9">
-          <h1>Detajet e postimit:</h1>
+          <h1>Post details:</h1>
         <!-- blog post -->
         <div class="blog-post">
           <img src="img/blog/1.jpg" alt="">
@@ -22,9 +22,9 @@
             </div>
           </div>
           <p>{{ post.text|capfirst }} </p>
-          <a href="/blog/" class="btn btn-dark">Kthehu</a>
+          <a href="/blog/" class="btn btn-dark">Return</a>
           {% if post.author == request.user %}
-          <a href="/blog/{{ post.id }}/delete" class="btn btn-danger">Fshij Postimin</a>
+          <a href="/blog/{{ post.id }}/delete" class="btn btn-danger">Delete Post</a>
           {% endif %}
         </div>
       </div>

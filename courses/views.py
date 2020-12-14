@@ -1,13 +1,16 @@
 import secrets
-from django.shortcuts import render, redirect
-from django.views.generic import TemplateView,ListView,DetailView,View
-from courses.models import Lendet,Lesson,Klasa
-from memberships.models import UserMembership
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
+from django.views.generic import TemplateView, ListView, DetailView, View
+
+from courses.models import Lendet, Lesson, Klasa
+from memberships.models import UserMembership
 from .forms import KlasaForm, LendaForm, MesimiForm
+
+
 # Create your views here.
 
 class HomeView(TemplateView):
@@ -19,6 +22,7 @@ class HomeView(TemplateView):
         context['category'] = category
         return context
 
+
 class AboutView(TemplateView):
     template_name = 'about.html'
 
@@ -27,14 +31,12 @@ class ContactView(TemplateView):
     template_name = 'contact.html'
 
 
-
 def CourseListView(request, category):
     courses = Lendet.objects.filter(klasa=category)
     context = {
-        'courses':courses
+        'courses': courses
     }
     return render(request, 'courses/course_list.html', context)
-
 
 
 class CourseDetailView(DetailView):
@@ -43,8 +45,7 @@ class CourseDetailView(DetailView):
     model = Lendet
 
 
- 
-class LessonDetailView(View,LoginRequiredMixin):
+class LessonDetailView(View, LoginRequiredMixin):
     def get(self, request, course_slug, lesson_slug, *args, **kwargs):
         course = get_object_or_404(Lendet, slug=course_slug)
         lesson = get_object_or_404(Lesson, slug=lesson_slug)
@@ -58,7 +59,7 @@ def SearchView(request):
         kerko = request.POST.get('search')
         results = Lesson.objects.filter(titulli__contains=kerko)
         context = {
-            'results':results
+            'results': results
         }
         return render(request, 'courses/search_result.html', context)
 
@@ -77,7 +78,7 @@ def krijo_klase(request):
     else:
         form = KlasaForm()
     context = {
-        'form':form
+        'form': form
     }
     return render(request, 'courses/krijo_klase.html', context)
 
@@ -96,9 +97,9 @@ def krijo_lende(request):
             messages.success(request, f'Lenda juaj u krijua.')
             return redirect('/courses/' + str(slug))
     else:
-        form = LendaForm(initial={'krijues':request.user.id, 'slug':secrets.token_hex(nbytes=16)})
+        form = LendaForm(initial={'krijues': request.user.id, 'slug': secrets.token_hex(nbytes=16)})
     context = {
-        'form':form
+        'form': form
     }
     return render(request, 'courses/krijo_lende.html', context)
 
@@ -115,11 +116,11 @@ def krijo_mesim(request):
             lenda = form.cleaned_data['lenda']
             slug = lenda.slug
             messages.success(request, f'Mesimi juaj u krijua.')
-            return redirect('/courses/' + str(slug) )
+            return redirect('/courses/' + str(slug))
     else:
-        form = MesimiForm(initial={'slug':secrets.token_hex(nbytes=16)})
+        form = MesimiForm(initial={'slug': secrets.token_hex(nbytes=16)})
     context = {
-        'form':form
+        'form': form
     }
     return render(request, 'courses/krijo_mesim.html', context)
 
@@ -127,8 +128,10 @@ def krijo_mesim(request):
 def view_404(request, exception):
     return render(request, '404.html')
 
+
 def view_403(request, exception):
     return render(request, '403.html')
+
 
 def view_500(request):
     return render(request, '500.html')

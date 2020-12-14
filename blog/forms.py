@@ -1,14 +1,14 @@
 from django import forms
 from blog.models import Post
 
-class PostForm(forms.ModelForm):
 
+class PostForm(forms.ModelForm):
     class Meta:
-        model= Post
-        fields = ('title','text')
-    
+        model = Post
+        fields = ('title', 'text')
+
     def save_form(self, request, instance, form, change):
-        user = request.user 
+        user = request.user
         instance = form.save(commit=False)
         if not change or not instance.author:
             instance.author = user
